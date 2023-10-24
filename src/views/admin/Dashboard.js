@@ -11,42 +11,48 @@ export default function Dashboard() {
   const sidebarMenuRef = useRef(null);
 
   useEffect(() => {
+    const popperInstance = {};
+
+    // start: Sidebar
     const sidebarToggle = sidebarToggleRef.current;
     const sidebarOverlay = sidebarOverlayRef.current;
     const sidebarMenu = sidebarMenuRef.current;
     const main = mainRef.current;
 
-    const popperInstance = {};
-
-    // start: Sidebar
+    if (sidebarToggle) {
     sidebarToggle.addEventListener('click', function (e) {
-      e.preventDefault();
-      main.classList.toggle('active');
-      sidebarOverlay.classList.toggle('hidden');
-      sidebarMenu.classList.toggle('-translate-x-full');
+        e.preventDefault();
+        main.classList.toggle('active');
+        sidebarOverlay.classList.toggle('hidden');
+        sidebarMenu.classList.toggle('-translate-x-full');
     });
+    }
 
+    if (sidebarOverlay) {
     sidebarOverlay.addEventListener('click', function (e) {
-      e.preventDefault();
-      main.classList.add('active');
-      sidebarOverlay.classList.add('hidden');
-      sidebarMenu.classList.add('-translate-x-full');
+        e.preventDefault();
+        main.classList.add('active');
+        sidebarOverlay.classList.add('hidden');
+        sidebarMenu.classList.add('-translate-x-full');
     });
+    }
 
+    if (sidebarMenu) {
     document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (item) {
-      item.addEventListener('click', function (e) {
+        item.addEventListener('click', function (e) {
         e.preventDefault();
         const parent = item.closest('.group');
         if (parent.classList.contains('selected')) {
-          parent.classList.remove('selected');
+            parent.classList.remove('selected');
         } else {
-          document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (i) {
+            document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (i) {
             i.closest('.group').classList.remove('selected');
-          });
-          parent.classList.add('selected');
+            });
+            parent.classList.add('selected');
         }
-      });
+        });
     });
+    }
     // end: Sidebar
 
     // start: Popper
@@ -149,137 +155,137 @@ export default function Dashboard() {
   // end: Tab
 
   // start: Chart
-  useEffect(() => {
-    new Chart(document.getElementById('order-chart'), {
-      type: 'line',
-      data: {
-        labels: generateNDays(7),
-        datasets: [
-          {
-            label: 'Active',
-            data: generateRandomData(7),
-            borderWidth: 1,
-            fill: true,
-            pointBackgroundColor: 'rgb(59, 130, 246)',
-            borderColor: 'rgb(59, 130, 246)',
-            backgroundColor: 'rgb(59 130 246 / .05)',
-            tension: 0.2,
-          },
-          {
-            label: 'Completed',
-            data: generateRandomData(7),
-            borderWidth: 1,
-            fill: true,
-            pointBackgroundColor: 'rgb(16, 185, 129)',
-            borderColor: 'rgb(16, 185, 129)',
-            backgroundColor: 'rgb(16 185 129 / .05)',
-            tension: 0.2,
-          },
-          {
-            label: 'Canceled',
-            data: generateRandomData(7),
-            borderWidth: 1,
-            fill: true,
-            pointBackgroundColor: 'rgb(244, 63, 94)',
-            borderColor: 'rgb(244, 63, 94)',
-            backgroundColor: 'rgb(244 63 94 / .05)',
-            tension: 0.2,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  }, []); // Run this effect once when the component mounts
+//   useEffect(() => {
+//     new Chart(document.getElementById('order-chart'), {
+//       type: 'line',
+//       data: {
+//         labels: generateNDays(7),
+//         datasets: [
+//           {
+//             label: 'Active',
+//             data: generateRandomData(7),
+//             borderWidth: 1,
+//             fill: true,
+//             pointBackgroundColor: 'rgb(59, 130, 246)',
+//             borderColor: 'rgb(59, 130, 246)',
+//             backgroundColor: 'rgb(59 130 246 / .05)',
+//             tension: 0.2,
+//           },
+//           {
+//             label: 'Completed',
+//             data: generateRandomData(7),
+//             borderWidth: 1,
+//             fill: true,
+//             pointBackgroundColor: 'rgb(16, 185, 129)',
+//             borderColor: 'rgb(16, 185, 129)',
+//             backgroundColor: 'rgb(16 185 129 / .05)',
+//             tension: 0.2,
+//           },
+//           {
+//             label: 'Canceled',
+//             data: generateRandomData(7),
+//             borderWidth: 1,
+//             fill: true,
+//             pointBackgroundColor: 'rgb(244, 63, 94)',
+//             borderColor: 'rgb(244, 63, 94)',
+//             backgroundColor: 'rgb(244 63 94 / .05)',
+//             tension: 0.2,
+//           },
+//         ],
+//       },
+//       options: {
+//         scales: {
+//           y: {
+//             beginAtZero: true,
+//           },
+//         },
+//       },
+//     });
+//   }, []);
 
-  function generateNDays(n) {
-    const data = [];
-    for (let i = 0; i < n; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      data.push(
-        date.toLocaleString('en-US', {
-          month: 'short',
-          day: 'numeric',
-        })
-      );
-    }
-    return data;
-  }
+//   function generateNDays(n) {
+//     const data = [];
+//     for (let i = 0; i < n; i++) {
+//       const date = new Date();
+//       date.setDate(date.getDate() - i);
+//       data.push(
+//         date.toLocaleString('en-US', {
+//           month: 'short',
+//           day: 'numeric',
+//         })
+//       );
+//     }
+//     return data;
+//   }
 
-  function generateRandomData(n) {
-    const data = [];
-    for (let i = 0; i < n; i++) {
-      data.push(Math.round(Math.random() * 10));
-    }
-    return data;
-  }
+//   function generateRandomData(n) {
+//     const data = [];
+//     for (let i = 0; i < n; i++) {
+//       data.push(Math.round(Math.random() * 10));
+//     }
+//     return data;
+//   }
   // end: Chart
 
 
   return (
     <>
-      {/* <!-- start: Sidebar --> */}
-      <div className="fixed left-0 top-0 w-64 h-full bg-gray-900 p-4 z-50 sidebar-menu transition-transform">
-          <a href="#" className="flex items-center pb-4 border-b border-b-gray-800">
-              <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover" />
-              <span className="text-lg font-bold text-white ml-3">Logo</span>
-          </a>
-          <ul className="mt-4">
-              <li className="mb-1 group active">
-                  <a href="#" className="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-                      <i className="ri-home-2-line mr-3 text-lg"></i>
-                      <span className="text-sm">Dashboard</span>
-                  </a>
-              </li>
-              <li className="mb-1 group">
-                  <a href="#" className="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
-                      <i className="ri-instance-line mr-3 text-lg"></i>
-                      <span className="text-sm">Orders</span>
-                      <i className="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
-                  </a>
-                  <ul className="pl-7 mt-2 hidden group-[.selected]:block">
-                      <li className="mb-4">
-                          <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Active order</a>
-                      </li>
-                      <li className="mb-4">
-                          <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Completed order</a>
-                      </li>
-                      <li className="mb-4">
-                          <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Canceled order</a>
-                      </li>
-                  </ul>
-              </li>
-              <li className="mb-1 group">
-                  <a href="#" className="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
-                      <i className="ri-flashlight-line mr-3 text-lg"></i>
-                      <span className="text-sm">Services</span>
-                      <i className="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
-                  </a>
-                  <ul className="pl-7 mt-2 hidden group-[.selected]:block">
-                      <li className="mb-4">
-                          <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Manage services</a>
-                      </li>
-                  </ul>
-              </li>
-              <li className="mb-1 group">
-                  <a href="#" className="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-                      <i className="ri-settings-2-line mr-3 text-lg"></i>
-                      <span className="text-sm">Settings</span>
-                  </a>
-              </li>
-          </ul>
-      </div>
-      <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div>
-      {/* <!-- end: Sidebar --> */}
+        {/* <!-- start: Sidebar --> */}
+        <div className="fixed left-0 top-0 w-64 h-full bg-gray-900 p-4 z-50 sidebar-menu transition-transform">
+            <a href="#" className="flex items-center pb-4 border-b border-b-gray-800">
+                <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover" />
+                <span className="text-lg font-bold text-white ml-3">Logo</span>
+            </a>
+            <ul className="mt-4">
+                <li className="mb-1 group active">
+                    <a href="#" className="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+                        <i className="ri-home-2-line mr-3 text-lg"></i>
+                        <span className="text-sm">Dashboard</span>
+                    </a>
+                </li>
+                <li className="mb-1 group">
+                    <a href="#" className="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
+                        <i className="ri-instance-line mr-3 text-lg"></i>
+                        <span className="text-sm">Teacher</span>
+                        <i className="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
+                    </a>
+                    <ul className="pl-7 mt-2 hidden group-[.selected]:block">
+                        <li className="mb-4">
+                            <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Active order</a>
+                        </li>
+                        <li className="mb-4">
+                            <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Completed order</a>
+                        </li>
+                        <li className="mb-4">
+                            <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Canceled order</a>
+                        </li>
+                    </ul>
+                </li>
+                <li className="mb-1 group">
+                    <a href="#" className="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
+                        <i className="ri-flashlight-line mr-3 text-lg"></i>
+                        <span className="text-sm">Student</span>
+                        <i className="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
+                    </a>
+                    <ul className="pl-7 mt-2 hidden group-[.selected]:block">
+                        <li className="mb-4">
+                            <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Manage services</a>
+                        </li>
+                    </ul>
+                </li>
+                <li className="mb-1 group">
+                    <a href="#" className="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+                        <i className="ri-settings-2-line mr-3 text-lg"></i>
+                        <span className="text-sm">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div>
+        {/* <!-- end: Sidebar --> */}
 
-      {/* <!-- start: Main --> */}
-      <main className="w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 min-h-screen transition-all main">
+        {/* <!-- start: Main --> */}
+        <main className="w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 min-h-screen transition-all main">
         <div className="py-2 px-6 bg-white flex items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30">
             <button type="button" className="text-lg text-gray-600 sidebar-toggle">
                 <i className="ri-menu-line"></i>
@@ -1327,11 +1333,11 @@ export default function Dashboard() {
                 </div>
             </div>
         </div>
-    </main>
-    {/* <!-- end: Main --> */}
+        </main>
+        {/* <!-- end: Main --> */}
 
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </>
   );
 }

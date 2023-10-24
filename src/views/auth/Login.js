@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const history = useHistory();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // Reset previous errors
     setEmailError('');
     setPasswordError('');
@@ -23,9 +26,24 @@ function Login() {
       return;
     }
 
-    // Implement your login logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+      // Replace the URL with your MongoDB server endpoint
+      const response = await axios.post('http://localhost:3001/login', {
+        email,
+        password,
+      });
+
+      // if login successful
+      console.log(response.data);
+      if(response.data === 'successful') {
+        history.push('/dashboard');
+        console.log('Login Successful:', response.data.message);
+      }
+      // Handle the response accordingly (e.g., redirect on successful login)
+      console.log('Login Successful:', response.data);
+    } catch (error) {
+      console.error('Login Error:', error.response ? error.response.data : error.message);
+    }
   };
 
   return (
