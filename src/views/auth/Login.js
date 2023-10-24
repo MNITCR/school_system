@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import './App.css'; // Import the generated Tailwind CSS file
 
-function App() {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -47,7 +46,7 @@ function App() {
           {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
         </div>
         <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-600" >
+          <label htmlFor="password" className="block text-sm font-medium text-gray-600">
             Password
           </label>
           <input
@@ -70,4 +69,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;
